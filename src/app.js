@@ -1,3 +1,5 @@
+
+require('dotenv').config()
 const compression = require('compression')
 const express = require('express')
 const { default: helmet } = require('helmet')
@@ -10,15 +12,29 @@ const app = express()
 app.use(morgan("dev"))
 app.use(helmet()) //Bảo vệ riêng tư công nghệ sử dụng
 app.use(compression()) //nén các phản hồi HTTP, giảm dung lượng
-
+app.use(
+    express.urlencoded({ extended: true })
+);
+    
+app.use(express.json());
 //init db
-
+require('./dbs/init.mongodb')
+app.use('/',require('./routes'))
 //init routes
-app.get('/', (req, res, next) => {
-    return res.status(200).json({
-        message: "Welcome"
+
+//handling error 
+app.use( (req,res,next)=> {
+    const error = new Error('Not Found')
+    error.status = 404
+    next(error)
+})
+
+app.use( (error,req,res,next)=> {
+    const statusCode = error.status || 500
+    return res.status(statusCode).json({
+        code: statusCode,
+        status: 'error',
+        message: error.message || 'Internal Server Error'
     })
 })
-//handling error 
-
 module.exports = app
