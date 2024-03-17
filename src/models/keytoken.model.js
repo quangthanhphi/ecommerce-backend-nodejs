@@ -17,9 +17,10 @@ var keyTokenSchema = new Schema({
     publicKey:{
         type:String, required:true,
     },
-    refreshToken:{ //detect hacker token
-        type: Array, default: []
-    }
+    refreshTokensUsed:{ //detect hacker token
+        type: Array, default: [] //Những RT đã sử dụng
+    },
+    refreshToken: {type: String, required: true}
 }, {
     collection: COLLECTION_NAME,
     timestamps: true
