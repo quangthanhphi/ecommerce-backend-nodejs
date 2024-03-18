@@ -19,8 +19,8 @@ app.use(
 app.use(express.json());
 //init db
 require('./dbs/init.mongodb')
-app.use('/',require('./routes'))
 //init routes
+app.use('/',require('./routes'))
 
 //handling error 
 app.use( (req,res,next)=> {

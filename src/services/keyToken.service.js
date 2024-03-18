@@ -1,9 +1,9 @@
 'use strict';
 
 const keytokenModel = require('../models/keytoken.model');
-
+const  {Types: {ObjectId} } = require('mongoose')
 class KeyTokenService {
-    static async createKeyToken({ userId, publicKey, privateKey, refreshToken }) {
+    static createKeyToken = async ({ userId, publicKey, privateKey, refreshToken }) => {
         try {
             //level 0 
             // const tokens = await keytokenModel.create({
@@ -26,6 +26,14 @@ class KeyTokenService {
             console.error('Key token creation error:', error)
             return null; // or return a specific error code/message
         }
+    }
+
+    static findByUserId = async (userId) => {
+        return await keytokenModel.findOne({ user: new ObjectId(userId) }).lean();
+    }
+
+    static removeKeyById = async (id) => {
+        return await keytokenModel.deleteOne({ _id: id });
     }
 }
 
