@@ -50,6 +50,7 @@ const authentication = asyncHandler(async (req, res, next) => {
     //1
     const userId = req.headers[HEADER.CLIENT_ID]
     if (!userId) throw new AuthFailureError('Invalid Request')
+    
 
     //2
     const keyStore = await findByUserId(userId)
