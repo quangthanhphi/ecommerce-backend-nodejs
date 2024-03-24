@@ -27,6 +27,60 @@ class ProductController {
        }
     }
 
+    publishProductByShop = async(req, res, next) =>{
+        new SuccessResponse({
+            message: 'publishProductByShop success',
+            metadata: await ProductServiceV2.publishProductByShop({
+                product_id: req.params.id,
+                product_shop: req.user.userId
+            })
+        }).send(res)
+    }
+
+    unPublishProductByShop = async(req, res, next) =>{
+        new SuccessResponse({
+            message: 'unPublishProductByShop success',
+            metadata: await ProductServiceV2.unPublishProductByShop({
+                product_id: req.params.id,
+                product_shop: req.user.userId
+            })
+        }).send(res)
+    }
+
+    /**
+     * @desc Get all drafts for shop
+     * @param {Number} limit 
+     * @param {Number} skip 
+     * @return {JSON}
+     */
+    //QUERY
+    getAllDraftsForShop = async (req, res, next) => {
+        new SuccessResponse({
+            message: 'get list draft success',
+            metadata: await ProductServiceV2.findAllDraftsForShop( {
+                product_shop: req.user.userId
+            })
+        }).send(res)
+    }
+
+    getAllPublishForShop = async (req, res, next) => {
+        new SuccessResponse({
+            message: 'getAllPublishForShop success',
+            metadata: await ProductServiceV2.findAllPublishForShop( {
+                product_shop: req.user.userId
+            })
+        }).send(res)
+    }
+
+    getListSearchProduct = async (req, res, next) => {
+        new SuccessResponse({
+            message: 'getListSearchProduct success',
+            metadata: await ProductServiceV2.searchProducts( req.params)
+        }).send(res)
+    }
+
+    //END QUERY
+
     
 }
 
