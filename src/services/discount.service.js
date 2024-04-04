@@ -204,7 +204,9 @@ class DiscountService {
 
         //check xem discount la fixed amount
         const amount = discount_type === 'fixed_amount' ? discount_value : totalOrder * (discount_value / 100)
-
+        // console.log(`AMOUNT::`, amount)
+        // console.log(`DISCOUNT VALUE::`, discount_value)
+        // console.log(`TOTAL ORDER::`, totalOrder)
         return {
             totalOrder,
             discount: amount,
